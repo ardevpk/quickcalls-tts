@@ -103,8 +103,10 @@ class Model(
     pipeline_tag="text-to-speech",
     license="apache-2.0",
 ):
-    def __init__(self, config: ModelArgs):
+    def __init__(self, config: ModelArgs | dict):
         super().__init__()
+        if isinstance(config, dict):
+            config = ModelArgs(**config)
         self.config = config
 
         self.backbone, backbone_dim = _prepare_transformer(FLAVORS[config.backbone_flavor]())
